@@ -1,0 +1,62 @@
+
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<a class="navbar-brand" href=""><img src="assets/img/rhumasug.png" alt=""></a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			{% if app.user %}
+			<li class="nav-item"><a class="nav-link text-warning" href="">Bonjour: {{ app.user.prenom | upper }}</a></li>
+			{% endif %}
+			<li class="nav-item ">
+				<a class="nav-link active" href="">HOME PAGE</a>
+			</li>
+			<li class="nav-item e">
+				<a class="nav-link text-light" href="{{ path('accueil') }}">ACCUEIL</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-light" href="{{ path('nous') }}">QUI SOMMES-NOUS</a>
+			</li>
+
+			{% if app.user %}
+			
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-user"></i>
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				  <a class="dropdown-item " href="#">Info Personnelles</a>
+				  <div class="dropdown-divider"></div>
+				  <a class="dropdown-item" href="#">Mes commandes</a>
+				  <div class="dropdown-divider"></div>
+				  <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+				</div>
+			</li>
+			{% else %}
+			<li class="nav-item ">
+				<a class="nav-link  text-light" href="{{ path('app_login') }}">CONNEXION <i class="fas fa-sign-in-alt"></i></a>
+			</li>
+			{% endif %}
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">
+			{% if app.user %}
+			<li class="nav-item ">
+				<a class="nav-link  text-light" href="{{ path('panier') }}"><i class="fas fa-shopping-cart"></i></a>
+			</li>
+			
+
+			
+			<li class="nav-item">
+				<a class="nav-link text-light" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i></a>
+			</li>			
+			{% endif %}
+		</ul>
+		  
+
+	</div>
+</nav>
+<div class="dropdown-divider"></div>

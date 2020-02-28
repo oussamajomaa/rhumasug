@@ -1,0 +1,50 @@
+
+
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+
+
+<table class="table table-bordered">
+    <thead class="table-dark ">
+        <tr>
+            <th class="border-dark" scope="col">N°</th>
+            <th class="border-dark" scope="col">désignation</th>
+            <th class="border-dark" scope="col">prix</th>
+            <th class="border-dark" scope="col">quantité</th>
+            <th class="border-dark" scope="col">photo</th>
+            <th class="border-dark" scope="col">Action</th>
+        </tr>
+      </thead>
+    
+
+{% set i = 0 %}
+{% for panier in paniers %}
+{% set i = i + 1 %}
+
+<tr>
+    <td class="border-dark">{{ i }}</td>
+    <td class="border-dark">{{ panier.produit.designation | upper }}</td>
+    <td class="border-dark">{{ panier.produit.prix }}</td>
+    <td class="border-dark">{{ panier.qte }}</td>
+    <td class="border-dark"><img style="width: 50px;" src="{{ asset(panier.produit.photo) }}" alt=""></td>
+    <form action="" method="POST">
+        <input type="hidden" name="id_panier" value="{{ panier.id }}">
+        <td class="border-dark"><button class="btn" name="form"><img src="assets/img/delete.png" alt=""></button></td>
+    </form>
+
+</tr>
+{% endfor %}
+
+</table>
+<a href="" class="btn btn-success">Passer la commande !</a>
+</div>
+
+{% endblock %} 

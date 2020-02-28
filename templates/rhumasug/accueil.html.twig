@@ -1,0 +1,51 @@
+
+
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+
+    <div class="row"> 
+        
+        {# show all product #}
+{% for produit in produits %}
+    
+    <div class="col-sm-4"  style="margin-bottom:10px">
+        <div class="card r  border-dark ">
+            <div class="card-body "> 
+                <img class="d-block w-50" style="margin: auto" src="{{ asset(produit.photo) }}" alt="Third slide">
+                <h6 class="card-title" style='text-align:center'>{{ produit.designation | upper }}</h6>
+                <h5 class="card-title" style='text-align:center'>{{ produit.prix }} €</h5>
+
+                {% if app.user %}
+                <form  method="POST">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        {# stock id produit and id user into hidden input #}
+                        <input type="hidden" name="id_produit" value="{{ produit.id }}">
+                        <input type="hidden" name="id_user" value="{{ app.user.id }}">
+                       
+
+                        {# <label for="qtePanier">Quantité</label> #}
+                        <input type="number" min=1 value="1" class="col-4" name="qte">
+                        <button type="submit" name='add_panier' class="btn btn-success" title="Ajouter au panier"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </form>
+                
+                {% endif %}
+                    <div>
+                        <a href="{{ path('detail',{'id':produit.id}) }}">plus d'info...</a>  
+                    </div>
+            </div>       
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %} 

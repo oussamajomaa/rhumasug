@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div class="dropdown-divider"></div>
+<div class="container col-8">
+    
+    <h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
+
+    {{ form_start(registrationForm) }}
+    <div class="form-group">
+        {{ form_row(registrationForm.nom, {'attr':{'class':'form-control'}}) }}
+        {{ form_row(registrationForm.prenom, {'attr':{'class':'form-control'}}) }}
+        {{ form_row(registrationForm.tel, {'label':'N° Téléphone','attr':{'class':'form-control'}}) }}
+        {{ form_row(registrationForm.email, {'label':'Votre email','attr':{'class':'form-control'}}) }}
+        {{ form_row(registrationForm.plainPassword, {'label':'Votre mot de passe','attr':{'class':'form-control'}}) }}
+        {{ form_row(registrationForm.confirm_password, {'label':'Confirmez le mot de passe','attr':{'class':'form-control'}}) }}
+        {{ form_row(registrationForm.adresse, {'attr':{'class':'form-control'}}) }}
+        {{ form_row(registrationForm.ville, {'attr':{'class':'form-control'}}) }}
+        {{ form_row(registrationForm.pays, {'attr':{'class':'form-control'}}) }}
+        
+    </div>
+    
+    <div class="form-group">
+       
+    </div>
+    <div class="form-group">
+        
+    </div>
+    <div class="form-group">
+        {{ form_row(registrationForm.agreeTerms, {'label':'Acceptez les conditions !'}) }}
+    </div>
+
+        <button class="btn btn-success">S'inscrire</button>
+    {{ form_end(registrationForm) }}
+
+</div>
+
+{% endblock %}
+
+
