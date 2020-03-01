@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block body %}
+
+
+<div class="container ">
+
+
+
+        <table class="table  table-striped">
+            <thead class="table-dark ">
+                <tr>
+                    
+                    <th class="border-dark" scope="col">désignation</th>
+                    <th class="border-dark" scope="col">prix</th>
+                    
+                    <th class="border-dark" scope="col">photo</th>
+                    
+                </tr>
+              </thead>
+
+{% for produit in produits %}
+<tr>
+        <td >{{ produit.designation | upper }}</td>
+        <td >{{ produit.prix }}</td>
+        <td ><img style="width: 100px;" src="{{ asset(produit.photo) }}" alt=""></td>
+    </tr>
+{% endfor %}
+</table>
+</div>
+
+{% endblock %} 

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block body %}
+
+
+<div class="container col-12">
+
+
+    <table class="table  table-striped">
+        <thead class="table-dark ">
+            <tr>
+                <th class="border-dark" scope="col">N°</th>
+                <th class="border-dark" scope="col">désignation</th>
+                <th class="border-dark" scope="col">prix</th>
+                <th class="border-dark" scope="col">quantité</th>
+                <th class="border-dark" scope="col">Montant</th>
+                <th class="border-dark" scope="col">photo</th>
+                <th class="border-dark" scope="col">Action</th>
+            </tr>
+        </thead>
+
+        {% set total = 0 %}
+        {% set i = 0 %}
+        {% for panier in paniers %}
+        {% set i = i + 1 %}
+
+        <tr>
+            {# <form action="" method="POST"> #}
+                <td>{{ i }}</td>
+                <td>{{ panier.produit.designation | upper }}</td>
+                <td>{{ panier.produit.prix }}</td>
+                <form action="{{ path('updatePanier',{'id':panier.id}) }}" method="POST">
+                <td><input type="number" min=1 value="{{ panier.qte }}" class="col-4" name="qte"><button type="submit"><img src="assets/img/refresh.png" alt=""></button></td>
+                
+                </form>
+                <td>{{ panier.qte * panier.produit.prix }}</td>
+                <td><img style="width: 50px;" src="{{ asset(panier.produit.photo) }}" alt=""></td>
+
+                <input type="hidden" name="id_panier" value="{{ panier.id }}">
+                <td>
+                    <a href="{{ path('deletePanier',{'id':panier.id}) }}" class="btn"><img src="assets/img/delete.png" alt=""></a>
+                    {# <a href="{{ path('updatePanier',{'id':panier.id}) }}" class="btn"><img src="assets/img/refresh.png" alt=""></a> #}
+                </td>
+            
+
+        </tr>
+        {% set total = total + panier.qte * panier.produit.prix %}
+
+        {% endfor %}
+        <tr>
+            <td colspan="4" class="bg-warning text-right">Total</td>
+            <td class="bg-warning">{{ total }}</td>
+            <td class="bg-warning"></td>
+            <td class="bg-warning"></td>
+        </tr>
+
+    </table>
+
+    <a href="" class="btn btn-success">Passer la commande !</a>
+</div>
+
+
+{% endblock %}
+

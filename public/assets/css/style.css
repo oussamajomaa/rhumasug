@@ -3,6 +3,37 @@
     margin: 0;
 }
 
-/* img{
-    object-fit: fill;
-} */
+a {
+	font-family: 'Barlow Semi Condensed' ;
+
+}
+
+h5, h6 {
+	font-family: 'Pathway Gothic One' ;
+
+}
+
+th {
+    font-family: 'Pragati Narrow' ;
+
+}
+
+td, p {
+    font-family: 'Alegreya Sans';
+
+}
+
+#number-cart{
+    position: relative;
+}
+.number-cart{
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    background-color: red;
+    height: 14px;
+    line-height: 12px;
+    min-width: 12px;
+    border-radius:5px;
+    text-align: center;
+}

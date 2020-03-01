@@ -45,17 +45,21 @@
 		<ul class="nav navbar-nav navbar-right">
 			{% if app.user %}
 			<li class="nav-item ">
-				<a class="nav-link  text-light" href="{{ path('panier') }}"><i class="fas fa-shopping-cart"></i></a>
+				{% for n in app.session.get('no') %}
+				<a id="number-cart" class="nav-link  text-light" title="Panier" href="{{ path('panier') }}"><span class="number-cart">{{ n.1 }}</span><i class="fas fa-shopping-cart"></i></a>
+				
+				{% endfor %}
 			</li>
-			
 
-			
 			<li class="nav-item">
-				<a class="nav-link text-light" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i></a>
+				<a class="nav-link text-light" title="Déconnexion" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i></a>
 			</li>			
 			{% endif %}
 		</ul>
-		  
+		<form class="form-inline" action="{{ path('chercher') }}">
+			<input class="form-control mr-sm-2" type="search" placeholder="chercher" aria-label="Search" name="chercher">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Chercher</button>
+		</form>
 
 	</div>
 </nav>

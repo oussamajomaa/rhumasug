@@ -36,15 +36,24 @@ class ProduitRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Produit
+   
+    // public function findOneBySomeField($value): ?Produit
+    // {
+    //     return $this->createQueryBuilder('p')
+    //         ->andWhere('p.exampleField = :val')
+    //         ->setParameter('val', $value)
+    //         ->getQuery()
+    //         ->getOneOrNullResult()
+    //     ;
+    // }
+
+    public function findByString($string)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+        return $this->createQueryBuilder('produit')
+        ->where('produit.designation like :designation')
+        ->setParameter('designation', $string)
+        ->getQuery()
+        ->getResult();
+        }
+   
 }
