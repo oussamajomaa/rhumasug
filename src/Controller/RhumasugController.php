@@ -22,19 +22,19 @@ class RhumasugController extends AbstractController
     {
         
         // Compter le nombre du produit dand le panier
-        $repo = $this->getDoctrine()->getRepository(Panier::class);
-        $count = $repo->count($this->getUser());
-
-        // sotre the number of row in cart in session variable
-        $session = $request->getSession();
-        $session->set('no', $count);
+        
         // afficher tous les produits dans la page accueil
         $repo = $this->getDoctrine()->getRepository(Produit::class);
         $produits = $repo->findAll();
 
+        $repo = $this->getDoctrine()->getRepository(Panier::class);
+
+        // sotre the number of row in cart in session variable
+        $session = $request->getSession();
+        $session->set('no', $repo->count(['user' => $this->getUser()]));
         return $this->render('rhumasug/accueil.html.twig', [
-            'produits' => $produits,
-            'count' => $count
+            'produits' => $produits
+
         ]);
     }
 
@@ -77,7 +77,8 @@ class RhumasugController extends AbstractController
         $repo = $this->getDoctrine()->getManager();
         $produit = $repo->getRepository(Produit::class)->findByString("%".$string."%");
         return $this->render('rhumasug/chercher.html.twig',[
-            'produits'=>$produit
+            'produits'=>$produit,
+            'message'=>'Aucun produit trouvé correspond à votre recherche !!'
         ]);
     }
 }

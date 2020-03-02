@@ -11,9 +11,9 @@
 			{% if app.user %}
 			<li class="nav-item"><a class="nav-link text-warning" href="">Bonjour: {{ app.user.prenom | upper }}</a></li>
 			{% endif %}
-			<li class="nav-item ">
+			{# <li class="nav-item ">
 				<a class="nav-link active" href="">HOME PAGE</a>
-			</li>
+			</li> #}
 			<li class="nav-item e">
 				<a class="nav-link text-light" href="{{ path('accueil') }}">ACCUEIL</a>
 			</li>
@@ -45,10 +45,7 @@
 		<ul class="nav navbar-nav navbar-right">
 			{% if app.user %}
 			<li class="nav-item ">
-				{% for n in app.session.get('no') %}
-				<a id="number-cart" class="nav-link  text-light" title="Panier" href="{{ path('panier') }}"><span class="number-cart">{{ n.1 }}</span><i class="fas fa-shopping-cart"></i></a>
-				
-				{% endfor %}
+				<a id="number-cart" class="nav-link  text-light" title="Panier" href="{{ path('panier') }}"><span class="number-cart">{{ app.session.get('no') }}</span><img src="assets/img/panier.png" alt=""></i></a>
 			</li>
 
 			<li class="nav-item">

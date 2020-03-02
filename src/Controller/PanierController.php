@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Panier;
 use App\Entity\Produit;
-use App\Entity\User;
-use App\Form\PanierType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,7 +25,7 @@ class PanierController extends AbstractController
         if ($panier) {
             $panier->setQte($qte);
             $manager->flush();
-        }
+        }    
         return $this->redirectToRoute('panier');
     }
 
@@ -44,13 +42,14 @@ class PanierController extends AbstractController
             $manager->remove($panier);
             $manager->flush();
         }
-        $repo = $this->getDoctrine()->getRepository(Panier::class);
-        $count = $repo->count($this->getUser());
 
-        // sotre the number of row in cart in session variable
-        $session = $request->getSession();
-        $session->set('no', $count);
-        return $this->redirectToRoute('panier');
+        $repo = $this->getDoctrine()->getRepository(Panier::class);
+        return $this->json([
+            'message'=>'Un produit a été supprimé du panier',
+            'count'=>$repo->count(['user' => $this->getUser()])
+            
+        ]);
+        // return $this->redirectToRoute('panier');
     }
 
 
@@ -61,49 +60,47 @@ class PanierController extends AbstractController
     {
         // Ajouter un produit au panier
         $panier = new Panier();
+        
         $qte = $request->get('qte');
         if ($this->getUser()) {
-            $id_user = $this->getUser()->getId();
+            $manager = $this->getDoctrine()->getManager();
+            $item = $manager->getRepository(Panier::class)->findOneBy(['user' => $this->getUser(), 'produit' => $id]);
+            if ($item) {
+                $qte = $item->getQte() + $request->get('qte');
+                $panier = $manager->getRepository(Panier::class)->find($item->getId());
 
-            if ($id_user && $id) {
-                $manager = $this->getDoctrine()->getManager();
-                $item = $manager->getRepository(Panier::class)->findBy(['user' => $this->getUser(), 'produit' => $id]);
-                if ($item) {
-                    $qte = $item[0]->getQte() + $request->get('qte');
-                    $panier = $manager->getRepository(Panier::class)->find($item[0]->getId());
+                $panier->setQte($qte);
+                $manager->flush();
+            } else {
 
-                    $panier->setQte($qte);
-                    $manager->flush();
-                } else {
-                    $user = $manager->getRepository(User::class)->find($id_user);
-                    $produit = $manager->getRepository(Produit::class)->find($id);
+                $produit = $manager->getRepository(Produit::class)->find($id);
 
-                    $panier->setUser($user)
+                $panier->setUser($this->getUser())
                         ->setProduit($produit)
                         ->setQte($qte);
-                    $manager->persist($panier);
-                    $manager->flush();
-                }
+                $manager->persist($panier);
+                $manager->flush();
             }
+
         }
-        $repo = $this->getDoctrine()->getRepository(Panier::class);
-        $count = $repo->count($this->getUser());
-
-        // sotre the number of row in cart in session variable
-        $session = $request->getSession();
-        $session->set('no', $count);
-        return $this->redirectToRoute('panier');
-
+        // $repo = $this->getDoctrine()->getRepository(Panier::class);
+        // return $this->json([
+        //     'message' => 'Un produit a été ajouté au panier',
+        //     'count' => $repo->count(['user' => $this->getUser()])
+        // ]);
+        return $this->redirectToRoute('accueil');
     }
 
 
     /**
      * @Route("/panier", name="panier")
      */
-    public function index()
+    public function index(Request $request)
     {
         // Afficher tous les produits
         $repo = $this->getDoctrine()->getRepository(Panier::class);
+        $session = $request->getSession();
+        $session->set('no', $repo->count(['user' => $this->getUser()]));
         $allpaniers = $repo->findBy(["user" => $this->getUser()]);
         if ($allpaniers) {
 
@@ -114,6 +111,20 @@ class PanierController extends AbstractController
             return $this->redirectToRoute('accueil');
         }
 
+    }
+
+    public function total()
+    {
+        $repo = $this->getDoctrine()->getRepository(Panier::class);
+        $paniers = $repo->findBy(["user" => $this->getUser()]);
+        $total = 0;
+        foreach ($paniers as $row) {
+            $total += ($row->getProduit()->getPrix()) * ($row->getQte());
+        }
+        // sotre the number of row in cart in session variable
+        $session = $request->getSession();
+        $session->set('no', $repo->count(['user' => $this->getUser()]));
+        $session->set('total', $total);
     }
     
 }

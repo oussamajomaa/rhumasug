@@ -48,13 +48,13 @@ class PanierRepository extends ServiceEntityRepository
     }
     */
 
-    public function count($id)
-    {
-        return $this->createQueryBuilder('panier')
-            ->select('count(panier.id)')
-            ->where('panier.user = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getResult();
-    }
+    // public function count($id)
+    // {
+    //     return $this->createQueryBuilder('panier')
+    //         ->select('count(panier.id)')
+    //         ->where('panier.user = :id')
+    //         ->setParameter('id', $id)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
 }
