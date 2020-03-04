@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ClientController!{% endblock %}
+
+{% block body %}
+
+{% if app.user %}
+
+{# <div class="container">
+
+<h1 class="text-success">Info Personelles</h1>
+<div class="form-group">
+    {{ form_start(formClient) }}
+    {{ form_row(formClient.nom, {'value':app.user.nom ,'attr':{'class':'form-control'}}) }}
+    {{ form_row(formClient.prenom, {'value':app.user.prenom ,'attr':{'class':'form-control'}}) }}
+    {{ form_row(formClient.tel, {'value':app.user.tel ,'label':'N° Téléphone','attr':{'class':'form-control'}}) }}
+    {{ form_row(formClient.email, {'value':app.user.email ,'label':'Votre email','attr':{'class':'form-control'}}) }}
+    {{ form_row(formClient.plainPassword, {'type':'hidden','label':' ','attr':{'class':'form-control'}}) }}
+    {{ form_row(formClient.confirm_password, {'type':'hidden','label':' ','attr':{'class':'form-control'}})
+    }}
+    {{ form_row(formClient.adresse, {'value':app.user.adresse ,'attr':{'class':'form-control'}}) }}
+    {{ form_row(formClient.ville, {'value':app.user.ville ,'attr':{'class':'form-control'}}) }}
+    {{ form_row(formClient.pays, {'value':app.user.pays ,'attr':{'class':'form-control'}}) }}
+    {{ form_row(formClient.agreeTerms, {'label':'Acceptez les conditions !'}) }}
+    <button type="submit" name="submitInsert" class="btn btn-success">Enregistrer</button>
+    {{ form_end(formClient) }}
+</div>
+</div> #}
+
+    <div class="container ">
+
+        <h1 class="text-success">Info Personelles</h1>
+        <form action="{{ path('client')}}" method="POST">
+
+            <label for="inputNom">Nom</label>
+            <input type="text" name="nom" class="form-control" value="{{ app.user.nom }}" id="inputNom" required autofocus>
+
+            <label for="inputPrenom">Prénom</label>
+            <input type="text" name="prenom" class="form-control" id="inputPrenom" required value="{{ app.user.prenom }}">
+
+            <label for="inputTel">Téléphone</label>
+            <input type="text" name="tel" class="form-control" id="inputTel" required value="{{ app.user.tel }}">
+
+            <label for="inputEmail">Mail</label>
+            <input type="email" name="mail" class="form-control" id="inputEmail" placeholder="Email" required value="{{ app.user.email }}">
+
+            <label for="inputAddress">Adresse</label>
+            <input type="text" name="adresse" class="form-control" id="inputAddress" required value="{{ app.user.adresse }}">
+
+            <label for="inputCity">Ville</label>
+            <input type="text" name="ville" class="form-control" id="inputCity" required value="{{ app.user.ville }}">
+
+            <label for="inputPays">Pays</label>
+            <input type="text" name="pays" class="form-control" id="inputPays" required value="{{ app.user.pays }}">
+
+            <div class="dropdown-divider"></div>
+
+                <button type="submit" name="modifClient" class="btn btn-success">Enregistrer</button>
+
+        </form>
+    </div>
+
+{% endif %}
+
+{% endblock %}

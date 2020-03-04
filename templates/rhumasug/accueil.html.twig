@@ -2,6 +2,7 @@
 
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Hello AccueilController!{% endblock %}
 
 {% block body %}
@@ -14,69 +15,32 @@
 {% for produit in produits %}
     
     <div class="col-12 col-md-6 col-lg-3  "  style="margin-bottom:10px">
-        <div class="card border-dark ">
-            <div class="card-body "> 
+        <div class="card border-dark wow fadeInUp">
+            <div class="card-body  "> 
                 <img class="d-block w-50" style="margin: auto" src="{{ asset(produit.photo) }}" alt="Third slide">
                 <h6 class="card-title" style='text-align:center'>{{ produit.designation | upper }}</h6>
                 <h5 class="card-title" style='text-align:center'>Prix {{ produit.prix }} €</h5>
 
                 {% if app.user %}
-                <form action="{{ path('addPanier',{'id':produit.id}) }}" method="POST" id="ajoutPanier">
+                <form action="{{ path('addPanier',{'id':produit.id}) }}" method="POST" class="formAjoutPanier">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <input type="number" min=1 value="1" class="col-4" name="qte">
+                        <input type="number" min=1 value="1" class="col-4 qte" name="qte" id="qte">
                         <button type="submit" name='add_panier' class="btn btn-success ap" title="Ajouter au panier"><i
                                 class="fas fa-shopping-cart"></i></button>
                     </div>
                 </form>
+               
                 {# <a href="{{ path('addPanier',{'id':produit.id}) }}">ajouter</a> #}
                 {% endif %}
-                    {# <div>
+                    <div>
                         <a href="{{ path('detail',{'id':produit.id}) }}">plus d'info...</a>  
-                    </div> #}
-
-                <!-- Button trigger modal -->
-                <button type="button" class="btn text-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    plus d'info....
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Info Produit...</h5>
-                                
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <img class="d-block w-50" style="margin: auto" src="{{ asset(produit.photo) }}" alt="Third slide">
-                                <h6 class="card-title" style='text-align:center'>{{ produit.designation }}</h6>
-                                <h5 class="card-title" style='text-align:center'>Prix: {{ produit.prix }} €</h5>
-                                    <div class="dropdown-divider"></div>
-                                    <p>Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire
-                                        pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès qu'il est
-                                        prêt ou que la mise en page est achevée. Généralement, on utilise un texte en faux latin,
-                                        le Lorem ipsum ou LipsumLe lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre
-                                        provisoire
-                                        pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès qu'il est
-                                        prêt ou que la mise en page est achevée. Généralement, on utilise un texte en faux latin,
-                                        le Lorem ipsum ou Lipsum</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                    
-            </div>       
+                    </div>          
+            </div>            
         </div>
     </div>
+
+
+    
     {% endfor %}
 
     </div>
@@ -85,3 +49,6 @@
 
 
 {% endblock %} 
+{% block javascripts %}
+
+{% endblock %}

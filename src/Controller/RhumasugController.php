@@ -4,10 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Panier;
 use App\Entity\Produit;
-use App\Entity\User;
-use App\Form\PanierType;
-use Doctrine\Common\Collections\Expr\Value;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,6 +43,7 @@ class RhumasugController extends AbstractController
 
         $repo = $this->getDoctrine()->getRepository(Produit::class);
         $produit = $repo->find($id);
+
         return $this->render('rhumasug/detail_produit.html.twig', [
             'produit' => $produit
         ]);

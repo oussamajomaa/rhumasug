@@ -19,13 +19,13 @@ class PanierController extends AbstractController
     public function update($id, Request $request)
     {
         // Modifier la quantité d'un produit dans le panier
-        $qte=$request->get('qte');
+        $qte = $request->get('qte');
         $manager = $this->getDoctrine()->getManager();
         $panier = $manager->getRepository(Panier::class)->find($id);
         if ($panier) {
             $panier->setQte($qte);
             $manager->flush();
-        }    
+        }
         return $this->redirectToRoute('panier');
     }
 
@@ -45,26 +45,27 @@ class PanierController extends AbstractController
 
         $repo = $this->getDoctrine()->getRepository(Panier::class);
         return $this->json([
-            'message'=>'Un produit a été supprimé du panier',
-            'count'=>$repo->count(['user' => $this->getUser()])
-            
+            'message' => 'Un produit a été supprimé du panier',
+            'count' => $repo->count(['user' => $this->getUser()])
+
         ]);
         // return $this->redirectToRoute('panier');
     }
 
 
     /**
-     * @Route("/panier{id}", name="addPanier")
+     * @Route("/panier/{id}", name="addPanier")
      */
-    public function add(Request $request,$id)
+    public function add(Request $request, Produit $produit)
     {
+        // dd($request->get("qte"));
         // Ajouter un produit au panier
         $panier = new Panier();
-        
+
         $qte = $request->get('qte');
         if ($this->getUser()) {
             $manager = $this->getDoctrine()->getManager();
-            $item = $manager->getRepository(Panier::class)->findOneBy(['user' => $this->getUser(), 'produit' => $id]);
+            $item = $manager->getRepository(Panier::class)->findOneBy(['user' => $this->getUser(), 'produit' => $produit]);
             if ($item) {
                 $qte = $item->getQte() + $request->get('qte');
                 $panier = $manager->getRepository(Panier::class)->find($item->getId());
@@ -73,22 +74,21 @@ class PanierController extends AbstractController
                 $manager->flush();
             } else {
 
-                $produit = $manager->getRepository(Produit::class)->find($id);
+                $produit = $manager->getRepository(Produit::class)->find($produit);
 
                 $panier->setUser($this->getUser())
-                        ->setProduit($produit)
-                        ->setQte($qte);
+                    ->setProduit($produit)
+                    ->setQte($qte);
                 $manager->persist($panier);
                 $manager->flush();
             }
-
         }
-        // $repo = $this->getDoctrine()->getRepository(Panier::class);
-        // return $this->json([
-        //     'message' => 'Un produit a été ajouté au panier',
-        //     'count' => $repo->count(['user' => $this->getUser()])
-        // ]);
-        return $this->redirectToRoute('accueil');
+        $repo = $this->getDoctrine()->getRepository(Panier::class);
+        return $this->json([
+            'message' => 'Un produit a été ajouté au panier',
+            'count' => $repo->count(['user' => $this->getUser()])
+        ]);
+        // return $this->redirectToRoute('accueil');
     }
 
 
@@ -110,7 +110,6 @@ class PanierController extends AbstractController
         } else {
             return $this->redirectToRoute('accueil');
         }
-
     }
 
     public function total()
@@ -126,5 +125,4 @@ class PanierController extends AbstractController
         $session->set('no', $repo->count(['user' => $this->getUser()]));
         $session->set('total', $total);
     }
-    
 }
