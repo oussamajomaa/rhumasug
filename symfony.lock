@@ -75,6 +75,9 @@
     "doctrine/reflection": {
         "version": "v1.1.0"
     },
+    "dompdf/dompdf": {
+        "version": "v0.8.5"
+    },
     "easycorp/easy-log-handler": {
         "version": "1.0",
         "recipe": {
@@ -114,6 +117,12 @@
     "ocramius/proxy-manager": {
         "version": "2.7.0"
     },
+    "phenx/php-font-lib": {
+        "version": "0.5.1"
+    },
+    "phenx/php-svg-lib": {
+        "version": "v0.3.3"
+    },
     "php": {
         "version": "7.4"
     },
@@ -141,6 +150,9 @@
     "psr/log": {
         "version": "1.1.2"
     },
+    "sabberworm/php-css-parser": {
+        "version": "8.3.0"
+    },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
         "recipe": {
@@ -152,6 +164,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "stripe/stripe-php": {
+        "version": "v7.27.1"
     },
     "symfony/asset": {
         "version": "v5.0.4"
@@ -263,6 +278,15 @@
             "src/Controller/.gitignore",
             "src/Kernel.php"
         ]
+    },
+    "symfony/google-mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
+        }
     },
     "symfony/http-client": {
         "version": "v5.0.4"

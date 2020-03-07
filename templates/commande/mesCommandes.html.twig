@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Commandes{% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+{% set j = 0 %}
+{% for commandes in mesCommandes %}
+    <table class="table  table-striped">
+        <thead class="table-dark ">
+            <tr>
+                <th class="border-dark th1" scope="col">N° Commande</th>
+                <th class="border-dark th1" scope="col">Date</th>
+                <th class="border-dark th2" scope="col">désignation</th>
+                <th class="border-dark th1" scope="col">quantité</th>
+                <th class="border-dark th1" scope="col">Montant </th>
+                <th class="border-dark th1"><img src="assets/img/click.png" alt="" width="30" title="click"></th>
+            </tr>
+        </thead>
+        {% set j = j + 1 %}
+    {% set i = 0 %}
+   {% for item in commandes %}
+        {% set i = i + 1 %}
+    <tr class="trtd">
+        <td>{{ item.commande.id }}</td>
+        <td>{{ item.commande.createdAt | date("d/m/Y") }}</td>
+        <td>{{ item.produit.designation }}</td>
+        <td>{{ item.prix }}</td>
+        <td colspan="2">{{ item.qte }}</td>
+
+    </tr>
+    {% endfor %} 
+        
+    {% endfor %}
+    </table>
+
+</div>
+{% endblock %}
+

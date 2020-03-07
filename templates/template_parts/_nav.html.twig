@@ -30,7 +30,7 @@
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 				  <a class="dropdown-item " href="{{ path('client') }}">Info Personnelles</a>
 				  <div class="dropdown-divider"></div>
-				  <a class="dropdown-item" href="#">Mes commandes</a>
+				  <a class="dropdown-item" href="{{ path('mesCommandes') }}">Mes commandes</a>
 				  <div class="dropdown-divider"></div>
 				  <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
 				</div>
@@ -55,7 +55,7 @@
 		</ul>
 		<form class="form-inline" action="{{ path('chercher') }}">
 			<input class="form-control mr-sm-2" type="search" placeholder="chercher" aria-label="Search" name="chercher">
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Chercher</button>
+			<button class="btn"  type="submit"><img src="assets/img/search.png" alt="" width="30" title="chercher"></button>
 		</form>
 
 	</div>

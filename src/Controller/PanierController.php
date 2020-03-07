@@ -8,12 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class PanierController extends AbstractController
 {
 
 
     /**
-     * @Route("/updatePanier{id}", name="updatePanier")
+     * @Route("/updatePanier/{id}", name="updatePanier")
      */
 
     public function update($id, Request $request)
@@ -26,11 +27,13 @@ class PanierController extends AbstractController
             $panier->setQte($qte);
             $manager->flush();
         }
-        return $this->redirectToRoute('panier');
+        $montant=$panier->getQte()*$panier->getProduit()->getPrix();
+        return $this->json(['message' => 'La quantité a été modifié','montant'=>$montant]);
+        // return $this->redirectToRoute('panier');
     }
 
     /**
-     * @Route("/deletePanier{id}", name="deletePanier")
+     * @Route("/deletePanier/{id}", name="deletePanier")
      */
 
     public function delete($id, Request $request)
@@ -56,18 +59,16 @@ class PanierController extends AbstractController
     /**
      * @Route("/panier/{id}", name="addPanier")
      */
-    public function add(Request $request, Produit $produit)
+    public function add(Produit $produit)
     {
-        // dd($request->get("qte"));
-        // Ajouter un produit au panier
-        $panier = new Panier();
 
-        $qte = $request->get('qte');
+        $panier = new Panier();
+        $qte = 1;
         if ($this->getUser()) {
             $manager = $this->getDoctrine()->getManager();
             $item = $manager->getRepository(Panier::class)->findOneBy(['user' => $this->getUser(), 'produit' => $produit]);
             if ($item) {
-                $qte = $item->getQte() + $request->get('qte');
+                $qte = $item->getQte() + 1;
                 $panier = $manager->getRepository(Panier::class)->find($item->getId());
 
                 $panier->setQte($qte);
@@ -78,7 +79,7 @@ class PanierController extends AbstractController
 
                 $panier->setUser($this->getUser())
                     ->setProduit($produit)
-                    ->setQte($qte);
+                    ->setQte(1);
                 $manager->persist($panier);
                 $manager->flush();
             }
@@ -112,7 +113,7 @@ class PanierController extends AbstractController
         }
     }
 
-    public function total()
+    public function total(Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Panier::class);
         $paniers = $repo->findBy(["user" => $this->getUser()]);
@@ -125,4 +126,6 @@ class PanierController extends AbstractController
         $session->set('no', $repo->count(['user' => $this->getUser()]));
         $session->set('total', $total);
     }
+
+    
 }

@@ -38,9 +38,15 @@ class Produit
      */
     private $paniers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommandeProduit", mappedBy="produit")
+     */
+    private $commandeProduits;
+
     public function __construct()
     {
         $this->paniers = new ArrayCollection();
+        $this->commandeProduits = new ArrayCollection();
     }
 
 
@@ -111,6 +117,37 @@ class Produit
             // set the owning side to null (unless already changed)
             if ($panier->getProduit() === $this) {
                 $panier->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommandeProduit[]
+     */
+    public function getCommandeProduits(): Collection
+    {
+        return $this->commandeProduits;
+    }
+
+    public function addCommandeProduit(CommandeProduit $commandeProduit): self
+    {
+        if (!$this->commandeProduits->contains($commandeProduit)) {
+            $this->commandeProduits[] = $commandeProduit;
+            $commandeProduit->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeProduit(CommandeProduit $commandeProduit): self
+    {
+        if ($this->commandeProduits->contains($commandeProduit)) {
+            $this->commandeProduits->removeElement($commandeProduit);
+            // set the owning side to null (unless already changed)
+            if ($commandeProduit->getProduit() === $this) {
+                $commandeProduit->setProduit(null);
             }
         }
 

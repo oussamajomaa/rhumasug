@@ -17,13 +17,14 @@ class ClientController extends AbstractController
     {
         $client=$this->getUser();
         if ($request->getMethod()=='POST'){
-            $manager = $this->getDoctrine()->getManager();
             $client->setNom($request->get('nom'));
             $client->setPrenom($request->get('prenom'));
             $client->setTel($request->get('tel'));
             $client->setAdresse($request->get('adresse'));
             $client->setVille($request->get('ville'));
             $client->setPays($request->get('pays'));
+            
+            $manager = $this->getDoctrine()->getManager();
             $manager->flush();
         }
         return $this->render('client/index.html.twig');
@@ -38,7 +39,7 @@ class ClientController extends AbstractController
         if ($request->getMethod() == 'POST'){
             $email=$request->get('email');
             $client=$repo->findOneBy(['email'=>$email]);
-            dd($client);
+
         }
         return $this->render('client/mdp.html.twig');
     }

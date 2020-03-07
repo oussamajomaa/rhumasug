@@ -6,13 +6,12 @@
 
 <div class="dropdown-divider"></div>
 <div class="col-sm-6" style="margin:auto">
-    <div class="card ">
+    <div class="card " data-aos="zoom-in">
         <div class="card-body ">
             <img class="d-block w-50" style="margin: auto" src="{{ asset(produit.photo) }}" alt="Third slide">
             <h6 class="card-title" style='text-align:center'>{{ produit.designation }}</h6>
             <h5 class="card-title" style='text-align:center'>{{ produit.prix }} €</h5> 
-            <form action="{{ path('addPanier',{'id':produit.id}) }}" method="POST" id="ajoutPanier">
-                <input type="number" min=1 value="1" class="col-4" name="qte">
+                
                 <div class="dropdown-divider"></div>
                 <p>Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire 
                     pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès qu'il est 
@@ -22,10 +21,12 @@
                     prêt ou que la mise en page est achevée. Généralement, on utilise un texte en faux latin, 
                     le Lorem ipsum ou Lipsum</p>       
         </div>
-        <div class="justify ">
-            <a class="btn btn-success col-4 " href="{{ path('accueil') }}">Retour à la page d'Accueil</a>
-            <button type="submit" name='add_panier' class="btn btn-success ap" title="Ajouter au panier"><i
-                    class="fas fa-shopping-cart"></i></button>
+        
+        <div class="p-2">
+            {% if app.user %}
+            <a href="{{ path('addPanier',{'id':produit.id}) }}" class="btn btn-success ap"><i class="fas fa-shopping-cart"></i></a>
+            {% endif %}
+            <a class="btn btn-primary col-4 " href="{{ path('accueil') }}">Retour à la page d'Accueil</a>
         </div>
             </form>
 

@@ -3,12 +3,14 @@
     margin: 0;
 }
 
-a {
+
+
+a{
 	font-family: 'Barlow Semi Condensed' ;
 
 }
 
-h5, h6,h1 {
+h5, h6,h1,h2,h4,h3 {
 	font-family: 'Pathway Gothic One' ;
 
 }
@@ -18,7 +20,7 @@ th {
 
 }
 
-td, p {
+p,td,input {
     font-family: 'Alegreya Sans';
 
 }
@@ -38,3 +40,34 @@ td, p {
     text-align: center;
     font-size: 12px;
 }
+
+/* .only {
+    animation-duration: 0.7s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-name: text;
+    }
+
+@keyframes text {
+        0% {
+            transform: scale(1.2);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1.0);
+            opacity: 1.0;
+        }
+    } */
+
+    
+.trtd{
+    display: none;
+}
+.th1{
+    width: 10%;
+}
+.th2{
+    width: 50%;
+}
+
+
