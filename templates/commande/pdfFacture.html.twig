@@ -1,26 +1,22 @@
-{% extends 'base.html.twig' %}
+
 
 {% block title %}Facture{% endblock %}
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 {% block body %}
 
 {% if app.user %}
 <div class="container col-12">
-    <h1 class="text-success text-center">Votre facture</h1>
     <h6><img src="assets/img/logofacture.png" alt=""></h6>
     <div class="d-flex justify-content-between">
-        <div class="col-9">
+        <div class="col-12">
             <h6 >Tel: 225544113366</h6>
             <h6 >Mail: contact@rhumasug.car</h6>
             <h6 >2 RUE DE LA SOIF</h6>
             <h6 >PAU - FRANCE</h6>
             <h6 >www.rhumasug.car</h6> 
         </div>
-
-
-
-        <div class="col-3" >
+        <div class="col-12 text-right" >
             <h6 >***********************************</h6>
             <h6 >***********************************</h6>
             <h6 >{{ commande.user.prenom | upper }} {{ commande.user.nom | upper }}</h6>
@@ -28,7 +24,6 @@
             <h6 >{{ commande.user.ville | upper }} - {{ commande.user.pays | upper }}</h6>
         </div>
     </div>
-
     <div class="dropdown-divider"></div>
     <h5>Facture N°: {{ commande.id }} Date: {{ commande.createdAt | date("d/m/Y") }}</h5>
     <table class="table  table-striped">
@@ -63,12 +58,8 @@
         </tr>
     </table>
     <div class="container col-6">
-        <img src="assets/img/paye.png" alt="">
+        <img src="assets/img/paye.png" width="50%" alt="">
     </div>
-
-    <a href="{{ path('pdfFacture') }}" class="btn btn-success">Télécharger la facture</a>
-    <!-- <a href="{{ path('pdfFacture') }}" class="btn btn-success">Télécharger la facture</a> -->
-    {# <a href="{{ path('pdfFacture') }}" class="btn btn-danger">Téléchargez la facture!</a> #}
 </div>
 
 {% endif %}

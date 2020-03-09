@@ -105,13 +105,17 @@ class PanierController extends AbstractController
         $allpaniers = $repo->findBy(["user" => $this->getUser()]);
         if ($allpaniers) {
 
-            return $this->render('panier/index.html.twig', [
+            return $this->render('panier/panier.html.twig', [
                 'paniers' => $allpaniers
             ]);
         } else {
             return $this->redirectToRoute('accueil');
         }
     }
+
+
+
+   
 
     public function total(Request $request)
     {

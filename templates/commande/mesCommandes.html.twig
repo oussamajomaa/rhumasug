@@ -6,34 +6,43 @@
 {% block body %}
 
 <div class="container">
-{% set j = 0 %}
+
 {% for commandes in mesCommandes %}
+
     <table class="table  table-striped">
         <thead class="table-dark ">
+            <tr style="cursor: pointer;">
+                <th colspan="3" class="text-warning" scope="col">N° Commande: {{ commandes[0].commande.id }} - Date de Commande: {{ commandes[0].commande.createdAt | date("d/m/Y") }}</th>
+                <th scope="col"><img src="assets/img/down1.png" alt="" width="30" title="click"></span>
+            </tr>
             <tr>
-                <th class="border-dark th1" scope="col">N° Commande</th>
-                <th class="border-dark th1" scope="col">Date</th>
                 <th class="border-dark th2" scope="col">désignation</th>
                 <th class="border-dark th1" scope="col">quantité</th>
-                <th class="border-dark th1" scope="col">Montant </th>
-                <th class="border-dark th1"><img src="assets/img/click.png" alt="" width="30" title="click"></th>
+                <th class="border-dark th1" scope="col">Prix Unitaire </th>
+                <th class="border-dark th1" scope="col">Montant</th>
+                <!-- <th class="border-dark th1" scope="col"><img src="assets/img/down1.png" alt="" width="30" title="click"></span> -->
+                </th>
             </tr>
         </thead>
-        {% set j = j + 1 %}
+        {% set total = 0 %}
     {% set i = 0 %}
    {% for item in commandes %}
         {% set i = i + 1 %}
-    <tr class="trtd">
-        <td>{{ item.commande.id }}</td>
-        <td>{{ item.commande.createdAt | date("d/m/Y") }}</td>
-        <td>{{ item.produit.designation }}</td>
-        <td>{{ item.prix }}</td>
-        <td colspan="2">{{ item.qte }}</td>
+        <tr class="trtd">
 
-    </tr>
+            <td>{{ item.produit.designation }}</td>
+            <td>{{ item.qte }}</td>
+            <td >{{ item.prix }}</td>
+            <td colspan="2">{{ item.prix * item.qte }}</td>
+        </tr>
+        {% set total = total + item.prix * item.qte %}
     {% endfor %} 
-        
-    {% endfor %}
+    <tr class="trtd">
+        <td colspan="3" class="text-right font-weight-bold">TOTAL</td>
+        <td colspan="1" class="font-weight-bold">{{ total }}</td>
+    </tr>
+
+{% endfor %}
     </table>
 
 </div>

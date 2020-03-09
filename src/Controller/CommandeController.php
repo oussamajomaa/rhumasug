@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Panier;
 use App\Entity\Commande;
 use App\Entity\CommandeProduit;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,6 +52,8 @@ class CommandeController extends AbstractController
                 $manager=$this->getDoctrine()->getManager();
                 // insert into commande entity
                 $commande=new Commande();
+                
+               
                 $commande->setUser($this->getUser())
                         ->setCreatedAt(new \DateTime('now'));
                 $manager->persist($commande);
@@ -75,39 +79,81 @@ class CommandeController extends AbstractController
             }
             $session = $request->getSession();
             $session->set('commande',$commande);
-
+            
             $repo = $this->getDoctrine()->getRepository(CommandeProduit::class);
             $commandesProduits = $repo->findBy(['commande' => $commande]);
             return $this->render('commande/facture.html.twig',[
                 'commandesProduits'=>$commandesProduits,
                 'commande'=>$commande
             ]);
+            // return $this->redirectToRoute('pdfFacture');
         }
         return $this->redirectToRoute('accueil');
 
+    }
+
+    
+    /**
+     * @Route("/pdfFacture", name="pdfFacture")
+     */
+    public function pdfFacture(Request $request)
+    {
+        $session = $request->getSession();
+        $commande= $session->get('commande');
+        $repo = $this->getDoctrine()->getRepository(CommandeProduit::class);
+        $commandesProduits = $repo->findBy(['commande' => $commande]);
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('commande/pdfFacture.html.twig', [
+            'commandesProduits' => $commandesProduits,
+            'commande' => $commande
+        ]);
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+        
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+        return $this->redirectToRoute('accueil');
+        
     }
 
     /**
      * @Route("/mesCommandes", name="mesCommandes")
      */
-    public function mesCommandes(Request $request)
+    public function mesCommandes()
     {
-        if ($this->getUser()){
-            $repo=$this->getDoctrine()->getRepository(Commande::class);
-            $commandes=$repo->findBy(['user'=>$this->getUser()]);
-            
+        if ($this->getUser()) {
+            $repo = $this->getDoctrine()->getRepository(Commande::class);
+            $commandes = $repo->findBy(['user' => $this->getUser()]);
+
             $repo1 = $this->getDoctrine()->getRepository(CommandeProduit::class);
-            $commandeProduits=[];
+            $commandeProduits = [];
             // dump($commandes);
-            foreach ($commandes as $commande){ 
+            foreach ($commandes as $commande) {
                 array_push($commandeProduits, $repo1->findby(['commande' => $commande]));
             }
-           
-            return $this->render('commande/mesCommandes.html.twig',[
-                'mesCommandes'=> $commandeProduits,
-                
+
+            return $this->render('commande/mesCommandes.html.twig', [
+                'mesCommandes' => $commandeProduits,
+
             ]);
         }
         return $this->redirectToRoute('accueil');
     }
+   
 }

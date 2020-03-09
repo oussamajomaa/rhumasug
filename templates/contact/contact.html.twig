@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row d-flex align-items-center">
+
+        <div class="col-xs-12 col-sm-4">
+            <div class="contact-rich">
+                <h4>INFORMATIONS</h4>
+                <div class="d-flex align-items-start">
+                    <div class="icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="data" style="margin-left: 10px;">
+                        <p><a href="#">www.rhumasug.com</a> </p> 
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex align-items-start">
+                    <div class="icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="data" style="margin-left: 10px;">
+                        <p>Appelez-nous<br>0013434433223</p> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="left-column col-xs-12 col-sm-8 col-md-8">
+            {{ form_start(formContact,{'attr':{'class':'form-group'}}) }}
+            {{ form_row(formContact.nom,{'attr':{'class':'form-control'}}) }}
+            {{ form_row(formContact.prenom,{'attr':{'class':'form-control'}}) }}
+            {{ form_row(formContact.email,{'attr':{'class':'form-control'}}) }}
+            {{ form_row(formContact.message,{'name':'message','attr':{'class':'form-control'}}) }}
+            <div class="g-recaptcha" data-sitekey="6LcbuN8UAAAAAFJRY_VeZdGttxY8UfFcRkPTb4VN"></div>
+            <br>
+            <input type="submit" value="ENVOYER" class="btn btn-success">
+            {{ form_end(formContact) }}
+        </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+        <script src="https://www.google.com/recaptcha/api.js?render=6LcbuN8UAAAAAFJRY_VeZdGttxY8UfFcRkPTb4VN"></script>
+<script>
+    grecaptcha.ready(function () {
+        grecaptcha.execute('6LcbuN8UAAAAAFJRY_VeZdGttxY8UfFcRkPTb4VN', { action: 'homepage' }).then(function (token) {
+
+        });
+    });
+</script>
+
+{% endblock %}

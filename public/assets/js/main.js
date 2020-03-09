@@ -126,9 +126,16 @@ let theadTr=document.querySelectorAll('thead > tr');
 for (let i=0;i<theadTr.length;i++){
     theadTr[i].addEventListener('click',()=>{
         let trtd=theadTr[i].parentNode.parentNode.querySelectorAll('.trtd')
-        $(trtd).toggle('slow')
+        $(trtd).toggle('100')
+        if (theadTr[i].querySelector('img').getAttribute('src') == 'assets/img/down1.png'){
+            theadTr[i].querySelector('img').setAttribute('src','assets/img/up1.png')
+        }
+        else{
+            theadTr[i].querySelector('img').setAttribute('src', 'assets/img/down1.png')
+        }
         
 
     })
 }
+
 

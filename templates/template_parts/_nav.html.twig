@@ -20,6 +20,9 @@
 			<li class="nav-item">
 				<a class="nav-link text-light" href="{{ path('nous') }}">QUI SOMMES-NOUS</a>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link text-light" href="{{ path('contact') }}">CONTACT</a>
+			</li>
 
 			{% if app.user %}
 			
@@ -45,7 +48,7 @@
 		<ul class="nav navbar-nav navbar-right">
 			{% if app.user %}
 			<li class="nav-item ">
-				<a id="number-cart" class="nav-link  text-light" title="Panier" href="{{ path('panier') }}"><span class="number-cart">{{ app.session.get('no') }}</span><img src="assets/img/panier.png" alt=""></i></a>
+				<a id="number-cart" class="nav-link  text-light" title="Panier" href="{{ path('panier') }}"><span class="number-cart">{{ app.session.get('no') }}</span><img id="panier" src="assets/img/panier.png" alt=""></a>
 			</li>
 
 			<li class="nav-item">
