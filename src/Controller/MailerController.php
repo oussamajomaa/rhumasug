@@ -18,6 +18,7 @@ class MailerController extends AbstractController
         $email = new Email();
         $email->from("oussama1970jomaa@gmail.com")
               ->to($this->getUser()->getEmail())
+
               ->subject('Paiement accepté !')
               ->text("blabla")
               ->html('<p>Bonjour !<br>Votre paiement a été accepté !!</p>');

@@ -5,22 +5,22 @@
 
 
 
-a{
+a,td,th{
 	font-family: 'Barlow Semi Condensed' ;
 
 }
 
 h5, h6,h1,h2,h4,h3 {
-	font-family: 'Pathway Gothic One' ;
+	font-family: 'Alegreya Sans' ;
 
 }
 
-th {
+/* th {
     font-family: 'Pragati Narrow' ;
 
-}
+} */
 
-p,td,input {
+p,input {
     font-family: 'Alegreya Sans';
 
 }
@@ -41,36 +41,22 @@ p,td,input {
     font-size: 12px;
 }
 
-/* .only {
-    animation-duration: 0.7s;
-    animation-iteration-count: 1;
-    animation-timing-function: linear;
-    animation-name: text;
-    }
-
-@keyframes text {
-        0% {
-            transform: scale(1.2);
-            opacity: 0;
-        }
-        100% {
-            transform: scale(1.0);
-            opacity: 1.0;
-        }
-    } */
-
     
 .trtd{
     display: none;
 }
 .th1{
-    width: 8%;
+    width: 15%;
 }
 .th2{
-    width: 50%;
+    width: 55%;
 }
 
 /* site: 6LcbuN8UAAAAAFJRY_VeZdGttxY8UfFcRkPTb4VN */
 /* secrete: 6LcbuN8UAAAAAG8WNPWnJpBKbCBf1bfWks1H1VC6 */
+
+/* recaptcha2 */
+/* site: 6LciJuAUAAAAAL5OnOmGJCK1FU1SpfsuyHMqw8fy */
+/* secrete: 6LciJuAUAAAAAAZ5fvSNybtrjbbkC74qwLP171dS */
 
 

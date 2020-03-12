@@ -12,7 +12,7 @@ function ondelete(event) {
                 if (data.count == 0) {
                     location.href = '/';
                 }
-                $(this).closest('tr').remove();
+                $(this).parent().parent().remove();
 
             })
     })
@@ -42,62 +42,24 @@ function ajouter(event) {
 let ap = document.querySelectorAll('.ap');
 for (let i = 0; i < ap.length; i++) {
     ap[i].addEventListener('click', ajouter);
+
 }
 
-// function refresh(a, qte) {
-//     let url = a.href + "?qte=" + qte;
-//     fetch(url).then(response => {
-//         response.json()
-//             .then(response => {
-//                 alert(response.message)
-//             })
-//     })
-// }
-// // // tous les boutons de ajouter au panier
-// let refresh = document.querySelectorAll('.refreshPanier');
-// refresh.forEach((a) => {
-//     a.addEventListener("click", (e) => {
-//         e.preventDefault();
-//         // récupérer la quantité
-//         let qte = a.parentNode.querySelector("input").value;
-//         // récupérer le formulaire
-//         let form = bouton.parentNode.parentNode;
-//         refresh(form, qte);
-//     });
-// });
+// function update() {
 
+//     let qte = this.value;
+//     // let montant = this.parentNode.parentNode.querySelector('span');
 
-// function update(event) {
-
-//     event.preventDefault();
-//     let qte = this.parentNode.querySelector("input").value;
-//     let montant=this.parentNode.parentNode.querySelector('span');
-    
-//     const url = this.href + "?qte=" + qte;
+//     const url = this.querySelector('span').textContent + "?qte=" + qte;
+//     console.log(url)
 
 //     fetch(url).then(data => {
 //         data.json()
 //             .then(data => {
-//                 montant.textContent = data.montant
+
 //             })
 //     })
 // }
-
-function update() {
-
-    let qte = this.value;
-    // let montant = this.parentNode.parentNode.querySelector('span');
-
-    const url = this.querySelector('span').textContent + "?qte=" + qte;
-    console.log(url)
-
-    fetch(url).then(data => {
-        data.json()
-            .then(data => {
-
-            })
-    })
-}
 
 let qte = document.querySelectorAll('.inputQte');
 for (let i = 0; i < qte.length; i++) {
@@ -108,17 +70,11 @@ for (let i = 0; i < qte.length; i++) {
     fetch(url).then(data => {
             data.json()
                 .then(data => {
-                    montant.textContent = data.montant
+                    montant.textContent = data.montant + "€"
                 })
         })
     });
 }
-
-// let refresh = document.querySelectorAll('.refreshPanier');
-// let qte=document.querySelectorAll('.updateQte')
-// for (let i = 0; i < refresh.length; i++) {
-//     refresh[i].addEventListener('click', update);
-// }
 
 
 let theadTr=document.querySelectorAll('thead > tr');
@@ -138,4 +94,9 @@ for (let i=0;i<theadTr.length;i++){
     })
 }
 
+// document.querySelector('#idButton').addEventListener('click',()=>{
+//     console.log('hi')
+//     window.location.assign("panier")
+
+// })
 

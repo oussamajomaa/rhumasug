@@ -6,56 +6,35 @@
 
 {% block body %}
 
+    <div class="container col-10 " >
+        <h1 class="text-success text-center">Votre panier</h1>
+            {% set total = 0 %}
+            {% set i = 0 %}
+            {% for panier in paniers %}
+            {% set i = i + 1 %}
+            <div class="row btn-dark align-items-center" data-aos="zoom-in" style="margin: 10px; padding:10px; border-radius:10px">
+                <div class="col-12 col-md-4 col-lg-2 ">
+                    <img style="width: 100%;" src="{{ asset(panier.produit.photo) }}" alt="">
+                </div>
+                
+                <div class="col-12 col-md-4 col-lg-7 btn btn-dark mb-1">
+                    <h6>{{ panier.produit.designation | upper }}</h6>
+                </div>
 
-<div class="container col-10" data-aos="fade-down" data-aos-duration="1000">
-    <h1 class="text-success text-center">Votre panier</h1>
-
-    <table class="table  table-striped" >
-        <thead class="table-dark ">
-            <tr>
-                <th class="border-dark" scope="col">N°</th>
-                <th class="border-dark" scope="col">photo</th>
-                <th class="border-dark" scope="col">désignation</th>
-                <th class="border-dark" scope="col">prix</th>
-                <th class="border-dark" scope="col">quantité</th>
-                <th class="border-dark" scope="col">Montant</th>
-                <th class="border-dark" scope="col">Action</th>
-            </tr>
-        </thead>
-
-        {% set total = 0 %}
-        {% set i = 0 %}
-        {% for panier in paniers %}
-        {% set i = i + 1 %}
-
-        <tr>
-                <td>{{ i }}</td>
-                <td><img style="width: 50px;" src="{{ asset(panier.produit.photo) }}" alt=""></td>
-                <td>{{ panier.produit.designation | upper }}</td>
-                <td>{{ panier.produit.prix }}</td>
-                <td><input type="number" min=1 value="{{ panier.qte }}" class="form-control col-6 text-center inputQte" name="qte" class="updateQte">
+                <div class="col-12 col-md-4 col-lg-3 d-flex justify-content-between ">
                     {% set url = path('updatePanier',{'id':panier.id}) %}
                     <span style="display: none;">{{ url }}</span>
-                   
-                 </td>
-                    
-                        
-                        
-                    
-                <td><span class="montant">{{ panier.qte * panier.produit.prix }}</span></td>
-                <td>
-                    <a href="{{ path('deletePanier',{'id':panier.id}) }}" class="btn deletePanier"><img src="assets/img/delete.png" title="supprimer" alt=""></a>
-                </td>
-        </tr>
 
-        {% endfor %}
-
-
-    </table>
-
-    <a href="{{ path('commande') }}" class="btn btn-success">Passer la commande !</a>
-</div>
-
+                    <a class=" "><span class="montant btn btn-info">{{ panier.qte * panier.produit.prix }}€</span></a>
+                    <input type="number" min=1 value="{{ panier.qte }}" class="col-4 btn btn-info form-control text-center inputQte" name="qte"
+                            class="updateQte">
+    
+                    <a href="{{ path('deletePanier',{'id':panier.id}) }}" class="btn btn-danger deletePanier"><i class="fas fa-trash"></i></a>
+                </div>
+            </div>
+                {% endfor %}
+        <a href="{{ path('commande') }}" class="btn btn-success">Passer la commande !</a>
+    </div>
 
 {% endblock %}
 

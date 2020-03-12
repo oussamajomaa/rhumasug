@@ -1,38 +1,30 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block title %}Hello AccueilController!{% endblock %}
 
 {% block body %}
+    <div class="container col-10">
+        {% if produits %}
+            <div class="row d-flex justify-content-between p-1"  >
+                {% for produit in produits %}
 
+                    <div class="col-12 col-md-6 col-lg-3"  style="margin-bottom:10px" data-aos="zoom-in" >
+                        <div class="card-body  btn btn-dark">
+                            <div class="badge badge-info" >
+                                <img style="width: 100%;" src="{{ asset(produit.photo) }}" alt="">
+                            </div>
+                            <div class="btn btn-dark m-1">{{ produit.designation | upper }}</div>
+                            <div class="btn btn-success" >{{ produit.prix }}€</div>
+                        </div>
+                    </div>
 
-<div class="container ">
-
-
-{% if produits %}
-
-    <table class="table  table-striped">
-        <thead class="table-dark ">
-            <tr>      
-                <th class="border-dark" scope="col">désignation</th>
-                <th class="border-dark" scope="col">prix</th>
-                    
-                <th class="border-dark" scope="col">photo</th>               
-            </tr>
-        </thead>
-
-    {% for produit in produits %}
-    <tr>
-        <td >{{ produit.designation | upper }}</td>
-        <td >{{ produit.prix }}</td>
-        <td ><img style="width: 100px;" src="{{ asset(produit.photo) }}" alt=""></td>
-    </tr>
-    {% endfor %}
-    </table>
-    
-{% else %}
-    <p class="text-danger">{{ message }}</p>
-{% endif %}
-</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info alert-dismissible text-center">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>{{ message }}</strong> .
+            </div>
+        {% endif %}
+    </div>
 {% endblock %} 

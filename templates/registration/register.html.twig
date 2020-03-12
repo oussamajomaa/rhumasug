@@ -3,11 +3,20 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
+{% if  not app.user  %}
+
 <div class="dropdown-divider"></div>
 <div class="container col-8">
+    {% if message is defined %}
     
-    <h1 class="text-success">Inscription</h1>
-
+    <div class="alert alert-info alert-dismissible text-center">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>{{ message }}</strong> .
+    </div>
+    {% endif %}
+    <div class="btn btn-dark col-12 text-left">
+    <h1 class="text-success text-center">Inscription</h1>
+    
     {{ form_start(registrationForm) }}
     <div class="form-group">
         {{ form_row(registrationForm.nom, {'attr':{'class':'form-control'}}) }}
@@ -19,22 +28,22 @@
         {{ form_row(registrationForm.adresse, {'attr':{'class':'form-control'}}) }}
         {{ form_row(registrationForm.ville, {'attr':{'class':'form-control'}}) }}
         {{ form_row(registrationForm.pays, {'attr':{'class':'form-control'}}) }}
-        
     </div>
     
     <div class="form-group">
-       
-    </div>
-    <div class="form-group">
-        
-    </div>
-    <div class="form-group">
         {{ form_row(registrationForm.agreeTerms, {'label':'Acceptez les conditions !'}) }}
     </div>
-
         <button class="btn btn-success">S'inscrire</button>
+
     {{ form_end(registrationForm) }}
 
+{% else %}
+    <script>
+       window.location.assign("/")
+    </script>
+    
+{% endif %}
+    </div>
 </div>
 
 {% endblock %}

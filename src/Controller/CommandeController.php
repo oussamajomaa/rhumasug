@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Panier;
 use App\Entity\Commande;
 use App\Entity\CommandeProduit;
+use App\Repository\PanierRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,14 +17,14 @@ class CommandeController extends AbstractController
     /**
      * @Route("/commande", name="commande")
      */
-    public function index(Request $request)
+    public function index(PanierRepository $repo)
     {
 
-        $repo = $this->getDoctrine()->getRepository(Panier::class);
-        $session = $request->getSession();
-        $session->set('no', $repo->count(['user' => $this->getUser()]));
+        // $repo = $this->getDoctrine()->getRepository(Panier::class);
+        // $session = $request->getSession();
+        // $session->set('no', $repo->count(['user' => $this->getUser()]));
         $commandes = $repo->findBy(["user" => $this->getUser()]);
-        return $this->render('commande/index.html.twig', [
+        return $this->render('commande/commande.html.twig', [
             'commandes' => $commandes
         ]);
     }

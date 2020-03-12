@@ -24,8 +24,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
         $message=null;
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            if (($request->get('confirm_password'))=== ($request->get('plainPassword'))){
+            if ($form->get('plainPassword')->getData() === $form->get('confirm_password')->getData()){
 
                 // encode the plain password
                 $user->setPassword(
@@ -34,26 +33,32 @@ class RegistrationController extends AbstractController
                         $form->get('plainPassword')->getData()
                     )
                 );
-    
+        
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
-    
+        
                 // do anything else you need here, like send an email
-    
+        
                 return $guardHandler->authenticateUserAndHandleSuccess(
                     $user,
                     $request,
                     $authenticator,
                     'main' // firewall name in security.yaml
                 );
+                
+                return $this->redirectToRoute('login');
             }
-            return $this->redirectToRoute('login');
+            else{
+                return $this->render('registration/register.html.twig',[
+                    'message'=>'Les mots de passe ne sont pas identiques.',
+                    'registrationForm' => $form->createView()
+                ]);
+            }
         }
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-            'message'=>'mots de passe ne sont identiques !!!'
+            'registrationForm' => $form->createView()
         ]);
     }
 }

@@ -4,72 +4,66 @@
 
 
 {% block body %}
+    {% if app.user %}
+        <div class="container col-12">
+            <h1 class="text-success text-center">Votre facture</h1>
+            <h6><img src="assets/img/logofacture.png" alt=""></h6>
+            <div class="d-flex justify-content-between">
+                <div class="col-9">
+                    <h6 >Tel: 225544113366</h6>
+                    <h6 >Mail: contact@rhumasug.car</h6>
+                    <h6 >2 RUE DE LA SOIF</h6>
+                    <h6 >PAU - FRANCE</h6>
+                    <h6 >www.rhumasug.car</h6> 
+                </div>
 
-{% if app.user %}
-<div class="container col-12">
-    <h1 class="text-success text-center">Votre facture</h1>
-    <h6><img src="assets/img/logofacture.png" alt=""></h6>
-    <div class="d-flex justify-content-between">
-        <div class="col-9">
-            <h6 >Tel: 225544113366</h6>
-            <h6 >Mail: contact@rhumasug.car</h6>
-            <h6 >2 RUE DE LA SOIF</h6>
-            <h6 >PAU - FRANCE</h6>
-            <h6 >www.rhumasug.car</h6> 
+
+
+                <div class="col-3" >
+                    <h6 >***********************************</h6>
+                    <h6 >***********************************</h6>
+                    <h6 >{{ commande.user.prenom | upper }} {{ commande.user.nom | upper }}</h6>
+                    <h6 >{{ commande.user.adresse | upper }}</h6>
+                    <h6 >{{ commande.user.ville | upper }} - {{ commande.user.pays | upper }}</h6>
+                </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+            <h5>Facture N°: {{ commande.id }} Date: {{ commande.createdAt | date("d/m/Y") }}</h5>
+            <table class="table  table-striped">
+                <thead class="table-dark ">
+                    <tr class="text-warning">
+                        <th class="border-dark" scope="col">N°</th>
+                        <th class="border-dark" scope="col">désignation</th>
+                        <th class="border-dark" scope="col">prix</th>
+                        <th class="border-dark" scope="col">quantité</th>
+                        <th class="border-dark" scope="col">Montant</th>
+
+                    </tr>
+                </thead>
+
+                {% set total = 0 %}
+                {% set i = 0 %}
+                {% for commandeProduit in commandesProduits %}
+                    {% set i = i + 1 %}
+                    <tr class="text-white">
+                        <td>{{ i }}</td>
+                        <td>{{ commandeProduit.produit.designation | upper }}</td>
+                        <td>{{ commandeProduit.produit.prix }}</td>
+                        <td>{{ commandeProduit.qte }}</td>
+                        <td>{{ commandeProduit.qte * commandeProduit.produit.prix }}</td>
+                    </tr>
+                    {% set total = total + commandeProduit.qte * commandeProduit.produit.prix %}
+                {% endfor %}
+                <tr>
+                    <td colspan="4" class="text-right text-danger">TOTAL</td>
+                    <td class="text-danger">{{ total }}</td>
+                </tr>
+            </table>
+            <div class="container col-6">
+                <img src="assets/img/paye.png" alt="">
+            </div>
+            <a href="{{ path('pdfFacture') }}" class="btn btn-success">Télécharger la facture</a>
         </div>
-
-
-
-        <div class="col-3" >
-            <h6 >***********************************</h6>
-            <h6 >***********************************</h6>
-            <h6 >{{ commande.user.prenom | upper }} {{ commande.user.nom | upper }}</h6>
-            <h6 >{{ commande.user.adresse | upper }}</h6>
-            <h6 >{{ commande.user.ville | upper }} - {{ commande.user.pays | upper }}</h6>
-        </div>
-    </div>
-
-    <div class="dropdown-divider"></div>
-    <h5>Facture N°: {{ commande.id }} Date: {{ commande.createdAt | date("d/m/Y") }}</h5>
-    <table class="table  table-striped">
-        <thead class="table-dark ">
-            <tr>
-                <th class="border-dark" scope="col">N°</th>
-                <th class="border-dark" scope="col">désignation</th>
-                <th class="border-dark" scope="col">prix</th>
-                <th class="border-dark" scope="col">quantité</th>
-                <th class="border-dark" scope="col">Montant</th>
-
-            </tr>
-        </thead>
-
-        {% set total = 0 %}
-        {% set i = 0 %}
-        {% for commandeProduit in commandesProduits %}
-        {% set i = i + 1 %}
-        <tr>
-            <td>{{ i }}</td>
-            <td>{{ commandeProduit.produit.designation | upper }}</td>
-            <td>{{ commandeProduit.produit.prix }}</td>
-            <td>{{ commandeProduit.qte }}</td>
-            <td>{{ commandeProduit.qte * commandeProduit.produit.prix }}</td>
-        </tr>
-            {% set total = total + commandeProduit.qte * commandeProduit.produit.prix %}
-
-        {% endfor %}
-        <tr>
-            <td colspan="4" class="text-right">TOTAL</td>
-            <td>{{ total }}</td>
-        </tr>
-    </table>
-    <div class="container col-6">
-        <img src="assets/img/paye.png" alt="">
-    </div>
-
-    <a href="{{ path('pdfFacture') }}" class="btn btn-success">Télécharger la facture</a>
-    <!-- <a href="{{ path('pdfFacture') }}" class="btn btn-success">Télécharger la facture</a> -->
-    {# <a href="{{ path('pdfFacture') }}" class="btn btn-danger">Téléchargez la facture!</a> #}
-</div>
-
-{% endif %}
+    {% endif %}
 {% endblock %}

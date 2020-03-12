@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <div class="container col-10" data-aos="fade-down" data-aos-duration="1000">
+            <h1 class="text-success text-center">Votre commande</h1>
+            <table class="table  table-striped">
+                <thead class="table-dark ">
+                    <tr class="text-warning">
+                        <th class="border-dark" scope="col">N°</th>
+                        <th class="border-dark" scope="col">photo</th>
+                        <th class="border-dark" scope="col">désignation</th>
+                        <th class="border-dark" scope="col">prix</th>
+                        <th class="border-dark" scope="col">quantité</th>
+                        <th class="border-dark" scope="col">Montant</th>
+                    </tr>
+                </thead>
+                {% set total = 0 %}
+                {% set i = 0 %}
+                {% for commande in commandes %}
+                    {% set i = i + 1 %}
+                    <tr class="text-white">
+                        <td>{{ i }}</td>
+                        <td><img style="width: 50px;" src="{{ asset(commande.produit.photo) }}" alt=""></td>
+                        <td>{{ commande.produit.designation | upper }}</td>
+                        <td>{{ commande.produit.prix }}</td>
+                        <td>{{ commande.qte }}</td>
+                        <td>{{ commande.qte * commande.produit.prix }}</td>
+                        {% set total = total + commande.qte * commande.produit.prix %}
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="5" class="text-right text-danger">TOTAL</td>
+                    <td class="text-danger">{{ total }}</td>
+                </tr>
+            </table>
+
+        <div class="row justify-content-end" >
+            <div class="col-4">
+                <h5 class="card-title text-danger" style='text-align:center'>Adresse de facturation</h5>
+                <h5 class="card-title" style='text-align:center'>{{ app.user.nom | upper }} {{ app.user.prenom | upper }}</h6>
+                <h6 class="card-title" style='text-align:center'>{{ app.user.adresse | upper }}</h5>
+                <h6 class="card-title" style='text-align:center'>{{ app.user.ville | upper }} - {{ app.user.pays | upper }}</h5>
+            </div>
+        </div>
+
+            <a href="{{ path('paiement') }}" class="btn btn-success">Paiement !</a>
+            <a href="{{ path('panier') }}" class="btn btn-primary">Retour vers le panier !</a>
+        </div>
+    {% endif %}
+{% endblock %}

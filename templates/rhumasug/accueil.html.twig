@@ -16,10 +16,10 @@
     
     <div class="col-12 col-md-6 col-lg-4  "  style="margin-bottom:10px" data-aos="zoom-in">
         <div class="card border-dark " >
-            <div class="card-body  " > 
-                <img class="d-block w-50" style="margin: auto" src="{{ asset(produit.photo) }}" alt="Third slide">
-                <h6 class="card-title" style='text-align:center'>{{ produit.designation | upper }}</h6>
-                <h5 class="card-title" style='text-align:center'>Prix {{ produit.prix }} €</h5>
+            <div class="card-body  btn btn-dark" > 
+                <img class="d-block w-50 badge badge-info" style="margin: auto" src="{{ asset(produit.photo) }}" alt="Third slide">
+                <h6 class="card-title " style='text-align:center'>{{ produit.designation | upper }}</h6>
+                <h5 class="card-title " style='text-align:center'>Prix {{ produit.prix }} €</h5>
 
                 
                 {# <form action="{{ path('addPanier',{'id':produit.id}) }}" method="POST" class="formAjoutPanier"> #}
@@ -32,9 +32,9 @@
                
                 <div>
                     {% if app.user %}
-                    <a href="{{ path('addPanier',{'id':produit.id}) }}" class="btn btn-success ap"><i class="fas fa-shopping-cart"></i></a>
+                    <a href="{{ path('addPanier',{'id':produit.id}) }}" class="badge badge-success ap"><i class="fas fa-shopping-cart"></i></a>
                     {% endif %}
-                        <a href="{{ path('detail',{'id':produit.id}) }}" class="btn btn-primary">plus d'info...</a>  
+                        <a href="{{ path('detail',{'id':produit.id}) }}" class="badge badge-info">plus d'info...</a>  
                     </div>          
             </div>            
         </div>

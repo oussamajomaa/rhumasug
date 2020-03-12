@@ -7,7 +7,7 @@
         "ext-iconv": "*",
         "captcha-com/symfony-captcha-bundle": "4.*",
         "dompdf/dompdf": "^0.8.5",
-        "google/recaptcha": "^1.2",
+        "google/recaptcha": "~1.1",
         "sensio/framework-extra-bundle": "^5.1",
         "stripe/stripe-php": "^7.27",
         "symfony/asset": "5.0.*",
