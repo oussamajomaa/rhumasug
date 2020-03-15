@@ -11,9 +11,9 @@
         <table class="table  table-striped">
             <thead class="table-dark ">
                 <tr style="cursor: pointer;"  >
-                    <th class="th2 " >N° Commande: <span class="badge badge-success">{{ commandes[0].commande.id }}</span> </th>
+                    <th class="th2 " >N° Commande: <span class="text-success">{{ commandes[0].commande.id }}</span> </th>
                     <th class="th1 text-right" scope="col">Date de Commande: </th>
-                    <th class="th1"><span class="badge badge-success">{{ commandes[0].commande.createdAt | date("d/m/Y") }}</span></th>
+                    <th class="th1"><span class="text-success">{{ commandes[0].commande.createdAt | date("d/m/Y") }}</span></th>
                     <th scope="col" class="th1"><img src="assets/img/down1.png" alt="" width="30" title="click"></span>
                 </tr>
                 <tr class="trtd text-warning">
@@ -39,7 +39,8 @@
                 {% set total = total + item.prix * item.qte %}
             {% endfor %} 
             <tr class="trtd">
-                <td colspan="3" class="text-right font-weight-bold text-danger ">TOTAL</td>
+                <td><a href="{{ path('printCommande',{'id':commandes[0].commande.id}) }}" class="badge badge-secondary" target="blank"><img style="width: 15%;" src="assets/img/print.png" alt=""></a></td>
+                <td colspan="2" class="text-right font-weight-bold text-danger ">TOTAL</td>
                 <td colspan="1" class="font-weight-bold text-danger">{{ total }}€</td>
             </tr>
     {% endfor %}

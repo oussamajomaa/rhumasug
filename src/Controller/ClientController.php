@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,17 +13,37 @@ class ClientController extends AbstractController
     /**
      * @Route("/client", name="client")
      */
-    public function index(Request $request)
+    public function index(Request $request, UserRepository $repo)
     {
         $client=$this->getUser();
+       
         // si la methode du formulaire est 'POST'
-        if ($request->getMethod()=='POST'){
-            $client->setNom($request->get('nom'));
-            $client->setPrenom($request->get('prenom'));
-            $client->setTel($request->get('tel'));
-            $client->setAdresse($request->get('adresse'));
-            $client->setVille($request->get('ville'));
-            $client->setPays($request->get('pays'));
+        if ($request->getMethod()=='POST' ){
+            if ($client->getEmail()!= $request->get('mail')){
+                $email=$repo->findOneBy(['email'=>$request->get('mail')]);
+                if ($email){
+                    return $this->render('client/client.html.twig',[
+                        'message'=>"L'email que vous avez saisi est déjà pris"
+                    ]);
+                }
+                else{
+                    $client->setNom($request->get('nom'));
+                    $client->setPrenom($request->get('prenom'));
+                    $client->setTel($request->get('tel'));
+                    $client->setEmail($request->get('mail'));
+                    $client->setAdresse($request->get('adresse'));
+                    $client->setVille($request->get('ville'));
+                    $client->setPays($request->get('pays'));
+                }
+            }
+            else{
+                $client->setNom($request->get('nom'));
+                $client->setPrenom($request->get('prenom'));
+                $client->setTel($request->get('tel'));
+                $client->setAdresse($request->get('adresse'));
+                $client->setVille($request->get('ville'));
+                $client->setPays($request->get('pays'));
+            }
             
             $manager = $this->getDoctrine()->getManager();
             $manager->flush();

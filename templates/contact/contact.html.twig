@@ -59,7 +59,7 @@
     <script>
         grecaptcha.ready(function () {
             grecaptcha.execute('6LcbuN8UAAAAAFJRY_VeZdGttxY8UfFcRkPTb4VN', { action: 'homepage' }).then(function (token) {
-                let recaptcha_esponse=document.getElementById('recaptcha_esponse')
+                let recaptcha_response=document.getElementById('recaptcha_response')
                 recaptcha_response.value=token
             });
         });

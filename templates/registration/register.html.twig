@@ -33,6 +33,7 @@
     <div class="form-group">
         {{ form_row(registrationForm.agreeTerms, {'label':'Acceptez les conditions !'}) }}
     </div>
+        <input type="hidden" id="recaptcha_response" name="recaptcha_response">
         <button class="btn btn-success">S'inscrire</button>
 
     {{ form_end(registrationForm) }}
@@ -46,6 +47,18 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcbuN8UAAAAAFJRY_VeZdGttxY8UfFcRkPTb4VN"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LcbuN8UAAAAAFJRY_VeZdGttxY8UfFcRkPTb4VN', { action: 'homepage' }).then(function (token) {
+                let recaptcha_response = document.getElementById('recaptcha_response')
+                recaptcha_response.value = token
+            });
+        });
+    </script>
 {% endblock %}
 
 

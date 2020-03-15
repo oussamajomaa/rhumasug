@@ -23,9 +23,9 @@
                     
                     <div class="p-2">
                         {% if app.user %}
-                        <a href="{{ path('addPanier',{'id':produit.id}) }}" class="badge badge-success ap"><i class="fas fa-shopping-cart"></i></a>
+                        <a href="{{ path('addPanier',{'id':produit.id}) }}" class="btn btn-success ap"><i class="fas fa-shopping-cart"></i></a>
                         {% endif %}
-                        <a class="badge badge-info col-4 " href="{{ path('accueil') }}">Retour à la page d'Accueil</a>
+                        <a class="btn btn-info col-4 " href="{{ path('accueil') }}">Retour à la page d'Accueil</a>
                     </div>
         </div>
             </form>

@@ -5,13 +5,13 @@ namespace App\Controller;
 use App\Entity\Panier;
 use App\Entity\Commande;
 use App\Entity\CommandeProduit;
+use App\Repository\CommandeProduitRepository;
 use App\Repository\PanierRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
 class CommandeController extends AbstractController
 {
     /**
@@ -155,6 +155,42 @@ class CommandeController extends AbstractController
             ]);
         }
         return $this->redirectToRoute('accueil');
+    }
+
+    /**
+     * @Route("/printCommande/{id}", name="printCommande")
+     */
+    public function printCommande(CommandeProduitRepository $repo, $id)
+    {
+        $commande=$repo->findBy(['commande'=>$id]);
+        // return $this->render('commande/printCommande.html.twig',[
+        //     'commandesProduits'=>$commande
+        // ]);
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('commande/printCommande.html.twig', [
+            'commandesProduits' => $commande
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => false
+        ]);
+
     }
    
 }
